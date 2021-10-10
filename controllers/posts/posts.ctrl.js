@@ -47,6 +47,7 @@ exports.get_posts_id = async(req,res) => {
 
 exports.get_search = async (req, res) => {
   try {
+    console.log()
     const posts = await models.Posts.findAll({
       include : [ 'Tag' ],
 
