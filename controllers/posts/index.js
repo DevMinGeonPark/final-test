@@ -6,8 +6,9 @@ const paginate = require('express-paginate');
 
 //get
 router.get("/", paginate.middleware(5, 50) ,ctrl.get_posts);
+router.get('/search', ctrl.get_search);
 router.get("/:id" ,ctrl.get_posts_id);
-// router.get('/search', ctrl.get_search);
+
 
 //post
 router.post("/", ctrl.post_posts_write);

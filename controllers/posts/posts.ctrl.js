@@ -32,46 +32,51 @@ exports.get_posts_id = async(req,res) => {
             id: req.params.id
           },
         });
-
-        res.json({posts});
-    
+        
+        //If you don't have an ID
+        if (posts === null) {
+          res.json({message:"this id is null"})
+        } else {
+          res.json({posts});
+        }
+        
       } catch (e) {
         console.log(e);
       }
 }
 
-// exports.get_search = async (req, res) => {
-//   try {
-//     const posts = await models.Posts.findAll({
-//       include : [ 'Tag' ],
+exports.get_search = async (req, res) => {
+  try {
+    const posts = await models.Posts.findAll({
+      include : [ 'Tag' ],
 
-//       where : {
-//           ...( 
-//           // 검색어가 있는 경우
-//           ('name' in req.query && req.query.name) ? 
-//           {
-//               // + 태그에서 가져옴 or
-//               [models.Sequelize.Op.or] : [
-//                   models.Sequelize.where( models.Sequelize.col('Tag.name') , {
-//                       [models.Sequelize.Op.like] : `%${req.query.name}%`
-//                   }),
-//                   {
-//                       'name' : {
-//                           [models.Sequelize.Op.like] : `%${req.query.name}%`
-//                       }
-//                   }
-//               ],
-//           }
-//           :
-//           '')
-//       }
-//     });
+      where : {
+          ...( 
+          // 검색어가 있는 경우
+          ('name' in req.query && req.query.name) ? 
+          {
+              // + 태그에서 가져옴 or
+              [models.Sequelize.Op.or] : [
+                  models.Sequelize.where( models.Sequelize.col('Tag.name') , {
+                      [models.Sequelize.Op.like] : `%${req.query.name}%`
+                  }),
+                  {
+                      'title' : {
+                          [models.Sequelize.Op.like] : `%${req.query.name}%`
+                      }
+                  }
+              ],
+          }
+          :
+          '')
+      }
+    });
 
-//     res.json({ posts })
-//   } catch (e) {
-//     console.log(e);
-//   }
-// };
+    res.json({ posts })
+  } catch (e) {
+    console.log(e);
+  }
+};
 
 //[POST] posts ctrl
 exports.post_posts_write = async(req,res) => {
@@ -116,9 +121,17 @@ exports.post_posts_tag = async (req, res) => {
       });
       const status = await posts.addTag(tag[0]);
 
-      res.json({
+      if (JSON.stringify(status) == undefined) {
+        res.json({
+          status: "[]"
+        })
+      }
+      else {
+        res.json({
           status: status
-      });
+        });
+      }
+
   } catch (e) {
       console.log(e);
       res.json({

@@ -4,7 +4,6 @@ const express = require('express')
 const logger = require('morgan');
 const nunjucks = require("nunjucks");
 
-// const posts = require('./controllers/posts/posts');
 
 const db = require("./models");
 
