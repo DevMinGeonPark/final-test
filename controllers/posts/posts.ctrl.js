@@ -25,18 +25,18 @@ exports.get_posts = async(req, res) => {
     }
 }
 
-exports.get_posts_id = async(req,res) => {
-    try {
-        const posts = await models.Posts.findOne({
-          where: {
-            id: req.params.id
-          },
-          include: ["Posts"]
-        });
+// exports.get_posts_id = async(req,res) => {
+//     try {
+//         const posts = await models.Posts.findOne({
+//           where: {
+//             id: req.params.id
+//           },
+//           include: ["Posts"]
+//         });
 
-        res.json({posts});
+//         res.json({posts});
     
-      } catch (e) {
-        console.log(e);
-      }
-}
+//       } catch (e) {
+//         console.log(e);
+//       }
+// }
