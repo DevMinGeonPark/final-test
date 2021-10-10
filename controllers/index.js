@@ -8,7 +8,7 @@ function rootMiddleware(req,res,next) {
 }
 
 router.get("/", rootMiddleware, (req, res) => {
-    res.json({status:"mian-pages"})
+    res.json({message:"mian-pages"})
 });
 
 router.use("/posts",require("./posts"))

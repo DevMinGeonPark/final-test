@@ -11,16 +11,16 @@ class App {
   constructor() {
     this.app = express();
 
-    // db 접속
+    // db connect
     this.dbConnection();
 
-    // 미들웨어 셋팅
+    // middleWare
     this.setMiddleWare();
 
-    // 라우팅
+    // Routing
     this.getRouting();
 
-    // 404 페이지를 찾을수가 없음
+    // 404 status
     this.status404();
 
   }
@@ -43,8 +43,9 @@ class App {
   }
 
   setMiddleWare() {
-    // 미들웨어 셋팅
+    // middleWare
     this.app.use(logger("dev"));
+    //bodypaser -> express
     this.app.use(express.json());
     this.app.use(express.urlencoded({ extended: false }));
   }
@@ -56,8 +57,7 @@ class App {
 
   status404() {
     this.app.use((req, res, _) => {
-      // res.status(404).render("common/404.html");
-      res.status(404).json({ status: "404" })
+      res.status(404).json({ statusCode: "404" })
     });
   }
 

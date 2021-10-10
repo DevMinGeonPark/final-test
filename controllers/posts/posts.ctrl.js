@@ -94,7 +94,8 @@ exports.post_posts_write = async(req,res) => {
 }
 }
 
-exports.post_posts_edit = async(req,res) => {
+//[PUT] posts ctrl
+exports.put_posts_edit = async(req,res) => {
   try {
     await models.Posts.update(req.body, {
       where: { id: req.params.id }
@@ -140,7 +141,7 @@ exports.post_posts_tag = async (req, res) => {
   }
 };
 
-//del ctrl
+//[DEL] posts ctrl
 exports.delete_posts = async (req, res) => {
   try {
     await models.Posts.destroy({
@@ -159,6 +160,7 @@ exports.delete_posts = async (req, res) => {
   }
 };
 
+//[DEL] delete ctrl
 exports.delete_posts_tag = async (req, res) => {
   try {
     const posts = await models.Posts.findByPk(req.params.post_id);
