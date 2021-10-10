@@ -11,7 +11,6 @@ router.get("/", rootMiddleware, (req, res) => {
     res.json({status:"mian-pages"})
 });
 
-router.get("/posts", require("./posts/index.js"));
-
+router.use("/posts",require("./posts"))
 
 module.exports = router;

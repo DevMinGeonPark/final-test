@@ -4,7 +4,7 @@ module.exports = (sequelize, DataTypes) => {
     const Posts = sequelize.define("Posts", {
         id : { type: DataTypes.INTEGER, primaryKey: true, autoIncrement : true},
         title : { type: DataTypes.STRING, comment: "제목"},
-        contects : { type: DataTypes.TEXT, comment: "내용"} 
+        content : { type: DataTypes.TEXT, comment: "내용"} 
     },
         {
             tableName: "Posts"

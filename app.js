@@ -9,49 +9,31 @@ const nunjucks = require("nunjucks");
 const db = require("./models");
 
 class App {
-    constructor() {
-        this.app = express();
+  constructor() {
+    this.app = express();
 
-        // db 접속
-        this.dbConnection();
+    // db 접속
+    this.dbConnection();
 
-        // 라우팅
-        this.getRouting();
+    // 미들웨어 셋팅
+    this.setMiddleWare();
 
-        // 404 페이지를 찾을수가 없음
-        this.status404();
+    // 라우팅
+    this.getRouting();
 
-        // 미들웨어 셋팅
-        this.setMiddleWare();
+    // 404 페이지를 찾을수가 없음
+    this.status404();
 
-    }
-
-    // app.use(logger('dev'));
-
-    setMiddleWare() {
-        // 미들웨어 셋팅
-        this.app.use(logger("dev"));
-    }
-
-    getRouting() {
-        this.app.use(require("./controllers"));
-    }
+  }
 
 
-    status404() {
-        this.app.use((req, res, _) => {
-            // res.status(404).render("common/404.html");
-            res.status(404).json({status:"404"})
-        });
-    }
-
-    dbConnection() {
+  dbConnection() {
     // DB authentication
     db.sequelize
       .authenticate()
       .then(() => {
         console.log("Connection has been established successfully.");
-        return db.sequelize.sync(); 
+        return db.sequelize.sync();
       })
       .then(() => {
         console.log("DB Sync complete.");
@@ -59,13 +41,28 @@ class App {
       .catch((err) => {
         console.error("Unable to connect to the database:", err);
       });
-    }
+  }
+
+  setMiddleWare() {
+    // 미들웨어 셋팅
+    this.app.use(logger("dev"));
+    this.app.use(express.json());
+    this.app.use(express.urlencoded({ extended: false }));
+  }
+
+  getRouting() {
+    this.app.use(require("./controllers"));
+  }
+
+
+  status404() {
+    this.app.use((req, res, _) => {
+      // res.status(404).render("common/404.html");
+      res.status(404).json({ status: "404" })
+    });
+  }
 
 }
-
-
-
-
 
 
 module.exports = new App().app;
